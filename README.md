@@ -2,7 +2,7 @@
 
 Project Title:
 --------------
-Application Name: Taskify
+Application Name: Taskify                                  
 Slogan: From To-Do to Ta-Da!
 
 
