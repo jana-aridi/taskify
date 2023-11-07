@@ -10,7 +10,15 @@ const Login = () => {
         password: "",
     });
 
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
+    
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
  
     const handleChange = ({currentTarget: input}) => {
         setData({...data, [input.name]: input.value});
@@ -28,7 +36,10 @@ const Login = () => {
         }
         catch(error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500)
-                setError(error.response.data.message)
+                Toast.fire({
+                    icon: 'error',
+                    title: error.response.data.message
+                });
         }
     }
 
