@@ -50,7 +50,13 @@ const Signup = () => {
         try {
             const url = 'http://localhost:8080/api/register';
             const {data: res} = await axios.post(url, data);
-            navigate("/login")
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Account created successfully!'
+            });
+
+            navigate("/login");
             console.log(res.message);
 
         }
