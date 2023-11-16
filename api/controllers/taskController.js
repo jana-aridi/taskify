@@ -22,7 +22,7 @@ const updateTaskController = async(req, res) => {
 
     try {
 
-        taskService.updateTask(req.body);
+        taskService.updateTask(req.params.taskID, req.body);
         
         res.status(201).send({ message: "Task updated successfully!" });
 
@@ -45,7 +45,7 @@ const deleteTaskController = async(req, res) => {
 
     try {
 
-        taskService.deleteTask(req.body);
+        taskService.deleteTask(req.params.taskID);
         
         res.status(201).send({ message: "Task deleted successfully!" });
 
@@ -67,9 +67,8 @@ const deleteTaskController = async(req, res) => {
 const createSubtaskController = async(req, res) => {
 
     try {
-        console.log(req.query)
-        console.log(req.params)
-        taskService.createSubtask(req.query.taskID);
+        console.log(req.params) 
+        taskService.createSubtask(req.params.taskID);
         
         res.status(201).send({ message: "Subtask added successfully!" });
 
@@ -88,7 +87,7 @@ const createSubtaskController = async(req, res) => {
 const updateSubtaskController = async(req, res) => {
     try {    
 
-        const updatedTask = await taskService.updateSubtask(req.body);
+        const updatedTask = await taskService.updateSubtask(req.params.taskID, req.body);
  
         res.status(200).send({ message: 'update successful!'})
         // .json(updatedTask);

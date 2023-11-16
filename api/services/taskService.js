@@ -30,13 +30,12 @@ async function createTask(taskData) {
     return savedTask;
 }
 
-async function updateTask(taskData) {
+async function updateTask(taskID, taskData) {
 
     if (!taskData || Object.keys(taskData).length === 0) {
         throw new Error('TaskUpdateDataRequired');
     }
-    console.log('task data '+ taskData)
-    const taskID = taskData.taskID;
+    console.log('task data '+ taskData) 
     console.log(taskID)
     if (!taskID || !mongoose.Types.ObjectId.isValid(taskID)) {
         throw new Error('InvalidTaskID');
@@ -51,13 +50,8 @@ async function updateTask(taskData) {
     return updatedTask;
 }
 
-async function deleteTask(taskData) {
+async function deleteTask(taskID) {
 
-    if (!taskData || Object.keys(taskData).length === 0) {
-        throw new Error('TaskDataRequired');
-    }
-
-    taskID = taskData.taskID
 
     if (!taskID || !mongoose.Types.ObjectId.isValid(taskID)) {
         throw new Error('InvalidTaskID');
@@ -97,9 +91,8 @@ async function createSubtask(taskID) {
     return updatedTask;
 }
 
-async function updateSubtask(taskData) {
-
-    const taskID = taskData.taskID;
+async function updateSubtask(taskID, taskData) {
+ 
     const subtaskID = taskData.subtaskID;
     const subtaskUpdates = taskData.updates;
 

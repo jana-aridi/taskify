@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/add', taskController.createTaskController);
 
-router.post('/update', taskController.updateTaskController);
+router.post('/update/:taskID', taskController.updateTaskController);
 
-router.delete('/', taskController.deleteTaskController);
+router.delete('/delete/:taskID', taskController.deleteTaskController);
 
-router.post('/addSubtask', taskController.createSubtaskController);
-router.post('/updateSubtask', taskController.updateSubtaskController);
+router.post('/addSubtask/:taskID', taskController.createSubtaskController);
+router.post('/updateSubtask/:taskID', taskController.updateSubtaskController);
 
 module.exports = router;
 
