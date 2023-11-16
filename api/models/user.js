@@ -33,6 +33,12 @@ const userSchema = new mongoose.Schema({
     isSuperAdmin: {
         type: Boolean, 
         default: false,
+    },
+    
+    workspaceID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Workspace',
+        default: null,
     }
 
     
