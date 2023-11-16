@@ -117,8 +117,7 @@ async function updateSubtask(taskID, taskData) {
             subtask[key] = subtaskUpdates[key];
         }
     });
-
-    // Save the parent task document with the updated subtask
+ 
     const updatedTask = await task.save();
     if (!updatedTask) {
         throw new Error('SubtaskUpdateFailed');

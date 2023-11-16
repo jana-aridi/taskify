@@ -1,4 +1,4 @@
-const {createUser, loginUser} = require("../services/userService");
+const {createUser, loginUser, joinWorkspace} = require("../services/userService");
 
 const createUserController = async (req, res) => {
     try {
@@ -43,6 +43,43 @@ const loginUserController = async (req, res) => {
         }
     }
 };
- 
 
-module.exports = {createUserController, loginUserController}
+
+const joinWorkspaceController = async (req, res) => {
+    try {
+        
+        const updatedUser = await joinWorkspace(req.params.userID, req.body);
+        res.status(200).send({message: "Joined workspace successfully" });
+
+    } catch (error) {
+        if (error.message === 'UserNotFound') {
+
+            res.status(401).send({ message: "Invalid user!" });
+
+        } else if (error.message === 'InvalidWorkspaceID') {
+
+            res.status(401).send({ message: "Invalid workspace!" });
+
+        } else if (error.message === 'MissingData') {
+
+            res.status(401).send({ message: "Missing Data!" });
+
+        } else if (error.message === 'UserUpdateFailed') {
+
+            res.status(401).send({ message: "Couldn't update user!" });
+
+        } else {
+
+            res.status(500).send({ message: "Internal Server Error" });
+
+        }
+    }
+};
+
+const userController = {
+    createUserController,
+    loginUserController,
+    joinWorkspaceController,
+}
+
+module.exports = userController
