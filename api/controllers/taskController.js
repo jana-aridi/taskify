@@ -21,10 +21,15 @@ const createTaskController = async(req, res) => {
 const updateTaskController = async(req, res) => {
 
     try {
-
-        taskService.updateTask(req.params.taskID, req.body);
-        
-        res.status(201).send({ message: "Task updated successfully!" });
+ 
+        const { updatedTask, warning } = await taskService.updateTask(req.params.taskID, req.body);
+ 
+        // Check if there's a warning message about the due date and include it in the response if present.
+        const responseMessage = warning
+            ? `Task updated successfully, but note: ${warning}`
+            : "Task updated successfully!";
+ 
+        res.status(200).send({ message: responseMessage, updatedTask }); 
 
     } catch (error) {
         if (error.message === 'InvalidTaskID')

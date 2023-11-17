@@ -24,6 +24,11 @@ const taskSchema = new mongoose.Schema({
         type: Boolean, 
         default: false,
     },
+
+    dueDate: {
+        type: String,
+        default: null,
+    },
     
     workspaceID: {
         type: Schema.Types.ObjectId, ref: 'Workspace'

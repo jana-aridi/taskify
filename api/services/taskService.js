@@ -31,24 +31,36 @@ async function createTask(taskData) {
 }
 
 async function updateTask(taskID, taskData) {
+    let updateData = {...taskData}; 
+    let dateUpdateWarning = null;
 
-    if (!taskData || Object.keys(taskData).length === 0) {
+    if (!updateData || Object.keys(updateData).length === 0) {
         throw new Error('TaskUpdateDataRequired');
     }
-    console.log('task data '+ taskData) 
-    console.log(taskID)
+
     if (!taskID || !mongoose.Types.ObjectId.isValid(taskID)) {
         throw new Error('InvalidTaskID');
     }
  
-    const updatedTask = await Task.findByIdAndUpdate(taskID, taskData, { new: true });
+    if ('dueDate' in updateData) {
+        const dueDate = new Date(updateData.dueDate); // Assuming updateData.dueDate is in the format of dd-mm-yyyy
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Reset time to the start of the day for comparison.
+ 
+        if (isNaN(dueDate.getTime()) || dueDate < currentDate) {
+            dateUpdateWarning = 'Due date is in the past and was not updated.';
+            delete updateData.dueDate;  
+        }
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(taskID, updateData, { new: true });
 
     if (!updatedTask) {
         throw new Error('TaskUpdateFailed');
     }
-
-    return updatedTask;
-}
+ 
+    return { updatedTask, warning: dateUpdateWarning }
+};
 
 async function deleteTask(taskID) {
 
@@ -90,7 +102,7 @@ async function createSubtask(taskID) {
  
     return updatedTask;
 }
-
+ 
 async function updateSubtask(taskID, taskData) {
  
     const subtaskID = taskData.subtaskID;
