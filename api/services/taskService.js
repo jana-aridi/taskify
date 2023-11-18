@@ -1,5 +1,5 @@
-const Task = require('../models/tasks');
-const mongoose = require('mongoose')
+const Task = require('../models/task');
+const mongoose = require('mongoose');
 
 
 async function getAllUserTasks(userID) {

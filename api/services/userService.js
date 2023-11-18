@@ -85,12 +85,7 @@ async function joinWorkspace(userID, data) {
     if (!workspace) {
         throw new Error('InvalidWorkspaceID');
     }
-
-    const updatedUser = await User.findByIdAndUpdate(userID, 
-        data, 
-        { new: true });
-    console.log(updatedUser)
-
+ 
     const updatedWorkspace = await Workspace.findByIdAndUpdate(
         workspaceID,
         { $addToSet: { employees: userID } },
@@ -98,11 +93,11 @@ async function joinWorkspace(userID, data) {
     );
     console.log(updatedWorkspace)
 
-    if (!updatedUser || !updatedWorkspace) {
+    if (!updatedWorkspace) {
         throw new Error('JoinWorkspaceFailed');
     }
 
-    return updatedUser;
+    return updatedWorkspace;
 }
 
 
