@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     },
     
     workspaceID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Workspace',
         default: null,
     }
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({_id: this._id}, 
-        process.env.JWTPRIVATEKEY, {expiresIn: '7d'});
+        process.env.SECRET_KEY, {expiresIn: '7d'});
 
     return token;
 }

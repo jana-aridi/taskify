@@ -47,11 +47,13 @@ const loginUserController = async (req, res) => {
 
 const joinWorkspaceController = async (req, res) => {
     try {
-        
+        console.log(req.params, req.body);
         const updatedUser = await joinWorkspace(req.params.userID, req.body);
+        console.log(updatedUser);
         res.status(200).send({message: "Joined workspace successfully" });
 
     } catch (error) {
+
         if (error.message === 'UserNotFound') {
 
             res.status(401).send({ message: "Invalid user!" });
@@ -64,9 +66,9 @@ const joinWorkspaceController = async (req, res) => {
 
             res.status(401).send({ message: "Missing Data!" });
 
-        } else if (error.message === 'UserUpdateFailed') {
+        } else if (error.message === 'JoinWorkspaceFailed') {
 
-            res.status(401).send({ message: "Couldn't update user!" });
+            res.status(401).send({ message: "Couldn't join workspace!" });
 
         } else {
 

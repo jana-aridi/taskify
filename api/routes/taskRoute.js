@@ -3,15 +3,15 @@ const authenticateToken = require('./middleware');
 const taskController = require('../controllers/taskController');
 const router = express.Router();
 
-router.post('/add', taskController.createTaskController, authenticateToken);
+router.post('/add', authenticateToken, taskController.createTaskController);
 
-router.post('/update/:taskID', taskController.updateTaskController, authenticateToken);
+router.post('/update/:taskID', authenticateToken, taskController.updateTaskController);
 
-router.delete('/delete/:taskID', taskController.deleteTaskController, authenticateToken,);
+router.delete('/delete/:taskID', authenticateToken, taskController.deleteTaskController);
 
-router.post('/addSubtask/:taskID', taskController.createSubtaskController, authenticateToken);
+router.post('/addSubtask/:taskID', authenticateToken, taskController.createSubtaskController);
 
-router.post('/updateSubtask/:taskID', taskController.updateSubtaskController, authenticateToken);
+router.post('/updateSubtask/:taskID', authenticateToken, taskController.updateSubtaskController);
 
 module.exports = router;
 

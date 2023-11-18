@@ -71,22 +71,35 @@ async function loginUser(userData) {
 
 
 async function joinWorkspace(userID, data) {
-    const user = await User.findById(userID);
+    const user = await User.findById(userID); 
+
     if (!user)
         throw new Error('UserNotFound')
-
+ 
     if (!data || data.length === 0)
         throw new Error('MissingData')
 
     workspaceID = data.workspaceID
-    if (!workspaceID || !Workspace.id(workspaceID)) {
+    const workspace = await Workspace.findById(workspaceID)
+     
+    if (!workspace) {
         throw new Error('InvalidWorkspaceID');
     }
 
-    const updatedUser = await User.findByIdAndUpdate(userID, data, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(userID, 
+        data, 
+        { new: true });
+    console.log(updatedUser)
 
-    if (!updatedUser) {
-        throw new Error('UserUpdateFailed');
+    const updatedWorkspace = await Workspace.findByIdAndUpdate(
+        workspaceID,
+        { $addToSet: { employees: userID } },
+        { new: true }
+    );
+    console.log(updatedWorkspace)
+
+    if (!updatedUser || !updatedWorkspace) {
+        throw new Error('JoinWorkspaceFailed');
     }
 
     return updatedUser;

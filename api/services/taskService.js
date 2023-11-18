@@ -125,7 +125,7 @@ async function updateSubtask(taskID, taskData) {
 
     // Apply the updates to the subtask
     Object.keys(subtaskUpdates).forEach((key) => {
-        if (subtask[key] !== undefined) { // Ensure the key is defined on the subtask schema
+        if (subtask[key] !== undefined) {  
             subtask[key] = subtaskUpdates[key];
         }
     });

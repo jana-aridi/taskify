@@ -7,6 +7,6 @@ router.post('/login', userController.loginUserController);
  
 router.post('/register', userController.createUserController);
 
-router.post('/joinWorkspace/:userID', authenticateToken, userController.joinWorkspaceController);
+router.post('/users/joinWorkspace/:userID', authenticateToken, userController.joinWorkspaceController);
  
 module.exports = router;
