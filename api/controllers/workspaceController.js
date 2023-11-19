@@ -30,9 +30,26 @@ const getAllWorkspacesController = async(req, res) => {
 
 }
 
+const getAllOtherWorkspaceEmployeesController = async(req, res) => {
+
+    try {
+        const workspaceID = req.params.workspaceID;
+        const userID = req.params.userID;
+        const employees = await workspaceService.getAllOtherWorkspaceEmployees(workspaceID, userID);
+        res.json(employees);
+    
+    } catch (error) {
+
+        res.status(500).send({ message: error.message });
+
+    }
+
+}
+
 const workspaceController = {
     getAllWorkspaceEmployeesController,
-    getAllWorkspacesController
+    getAllWorkspacesController,
+    getAllOtherWorkspaceEmployeesController
 }
 
 module.exports = workspaceController;

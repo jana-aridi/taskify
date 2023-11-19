@@ -7,6 +7,10 @@ router.post('/login', userController.loginUserController);
  
 router.post('/register', userController.createUserController);
 
+router.delete('/users/:userID', authenticateToken, userController.deleteUserController);
+
 router.post('/users/joinWorkspace/:userID', authenticateToken, userController.joinWorkspaceController);
  
+router.get('/users/getTasks/:userID', authenticateToken, userController.getUserTasksController);
+
 module.exports = router;

@@ -1,0 +1,18 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center;  */
+    height: 80vh;
+    width: 150vh;
+}
+
+.listTitle {
+    color: black;
+    font-weight: bold;
+}
+
+ListSubheader {
+    color: black;
+    font-weight: bold;
+}

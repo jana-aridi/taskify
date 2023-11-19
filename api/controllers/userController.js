@@ -1,9 +1,9 @@
-const {createUser, loginUser, joinWorkspace} = require("../services/userService");
+const userService = require("../services/userService");
 
 const createUserController = async (req, res) => {
     try {
 
-        const newUser = await createUser(req.body);
+        const newUser = await userService.createUser(req.body);
         res.status(201).send({ message: "User created successfully" });
 
     } catch (error) {
@@ -20,8 +20,8 @@ const createUserController = async (req, res) => {
 const loginUserController = async (req, res) => {
     try {
         
-        const token = await loginUser(req.body);
-        res.status(200).send({ data: token, message: "Logged in successfully" });
+        const data = await userService.loginUser(req.body);
+        res.status(200).send({ data: data, message: "Logged in successfully" });
 
     } catch (error) {
         if (error.isJoi) {
@@ -45,10 +45,24 @@ const loginUserController = async (req, res) => {
 };
 
 
+const deleteUserController = async (req, res) => {
+    try {
+
+        const userID = req.params.userID;
+        await userService.deleteUser(userID);
+
+        res.status(201).send({ message: "User deleted successfully" });
+
+    } catch (error) {
+        res.status(500).send({ message: "Internal Server Error" + error });
+    }
+};
+
+
 const joinWorkspaceController = async (req, res) => {
     try {
         console.log(req.params, req.body);
-        const updatedUser = await joinWorkspace(req.params.userID, req.body);
+        const updatedUser = await userService.joinWorkspace(req.params.userID, req.body);
         console.log(updatedUser);
         res.status(200).send({message: "Joined workspace successfully" });
 
@@ -78,10 +92,33 @@ const joinWorkspaceController = async (req, res) => {
     }
 };
 
+const getUserTasksController = async(req, res) => {
+    try {
+        console.log(req.params);
+        const tasks = await userService.getUserTasks(req.params.userID);
+        console.log(tasks);
+        res.status(200).json(tasks);
+        console.log('successful')
+    } catch (error) {
+        console.log(error)
+        if (error.message === 'UserNotFound') {
+
+            res.status(401).send({ message: "Invalid user!" });
+
+        } else {
+
+            res.status(500).send({ message: "Internal Server Error " + `${error}` });
+
+        }
+    }
+}
+
 const userController = {
     createUserController,
     loginUserController,
+    deleteUserController,
     joinWorkspaceController,
+    getUserTasksController,
 }
 
 module.exports = userController

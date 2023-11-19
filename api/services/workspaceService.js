@@ -12,7 +12,7 @@ async function getAllWorkspaceEmployees(workspaceID) {
     // find all users with the IDs found in the workspace's employees array
     const users = await User.find({ 
       _id: { $in: workspace.employees }
-    }).select('firstName lastName email'); 
+    }).select('_id firstName lastName email'); 
     console.log(users)
 
     return users; 
@@ -45,9 +45,34 @@ async function getAllWorkspaces() {
     return workspacesWithUserData;
 }
 
+async function getAllOtherWorkspaceEmployees(workspaceID, userID) {
+    
+    const user = await User.findById(userID);
+
+    if (!user)
+        throw error('InvalidUser');
+
+    const workspace = await Workspace.findById(workspaceID);
+    if (!workspace) {
+        throw new Error('WorkspaceNotFound');
+    }
+
+    const users = await User.find({ 
+        _id: { 
+          $in: workspace.employees, 
+          $ne: userID 
+        }
+    }).select('_id firstName lastName email');
+      
+    console.log(users);
+    
+    return users;
+}
+
 const workspaceService = {
     getAllWorkspaceEmployees,
-    getAllWorkspaces
+    getAllWorkspaces,
+    getAllOtherWorkspaceEmployees
 }
 
 module.exports = workspaceService;

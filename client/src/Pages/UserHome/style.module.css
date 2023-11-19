@@ -1,0 +1,15 @@
+.mainContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; 
+    width: 100%;
+    height: 100%;
+}
+
+.mainContainer h1 {
+    color: black;
+}
+
+.rightContainer {
+    padding: 20px;
+}

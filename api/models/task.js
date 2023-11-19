@@ -18,7 +18,7 @@ const taskSchema = new mongoose.Schema({
         default: "New Task",
     },
 
-    assignees: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    assignees: [{ type: Schema.Types.ObjectId, ref: 'user'}],
         
     isCompleted: {
         type: Boolean, 
@@ -31,7 +31,7 @@ const taskSchema = new mongoose.Schema({
     },
     
     workspaceID: {
-        type: Schema.Types.ObjectId, ref: 'Workspace'
+        type: Schema.Types.ObjectId, ref: 'workspace'
     },
 
     subtasks: [SubtaskSchema] 

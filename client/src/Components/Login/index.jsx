@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import styles from './style.module.css'; 
+import LocalStorageFile from '../LocalStorageFile';
 
 
 const Login = () => {
@@ -31,8 +32,15 @@ const Login = () => {
         try {
             const url = 'http://localhost:8080/api/login';
             const {data: res} = await axios.post(url, data);
-            localStorage.setItem("token", res.data);
-            window.location = '/'; 
+            Toast.fire({
+                icon: 'success',
+                title: res.message,
+            });
+            localStorage.setItem("token", res.data.token);
+            LocalStorageFile.setLocalStorageUser(res.data.user);
+            setTimeout(() => {
+                window.location = '/home';
+            }, 1500); 
 
         }
         catch(error) {

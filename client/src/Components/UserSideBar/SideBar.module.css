@@ -1,0 +1,40 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #36c5df; 
+  color: white;
+  /* padding: 30px; */
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
+.slogan {
+  padding-left: 30px;
+  color: black;
+  font-weight: bold;
+}
+
+.logo img{
+  padding: 30px; 
+  margin-bottom: 0px;
+}
+
+
+.logo p {
+  margin: 0px 0 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav a {
+  justify-content: center;
+  color: white;
+  margin-left: 55px;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 20px 0;
+}

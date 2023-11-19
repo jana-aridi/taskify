@@ -1,8 +1,9 @@
 const { User, validate } = require("../models/user");
 const Workspace = require("../models/workspace");
+const Task = require('../models/task');
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require('uuid');   
-const Joi = require("joi");
+const Joi = require("joi"); 
 
 
 async function createUser(userData) {
@@ -66,7 +67,9 @@ async function loginUser(userData) {
         throw new Error('InvalidPassword');
     }
 
-    return user.generateAuthToken(); 
+    const token =  user.generateAuthToken()   
+
+    return {user, token}; 
 }
 
 
@@ -100,9 +103,26 @@ async function joinWorkspace(userID, data) {
     return updatedWorkspace;
 }
 
+async function getUserTasks(userID) {
+    const user = await User.findById(userID);
+    if (!user)
+        throw new Error('UserNotFound');
+    
+    const tasks = await Task.find({ assignees: userID }).populate('assignees'); 
 
-module.exports = {
+    return tasks;
+}
+
+async function deleteUser(userID) {
+    await User.findByIdAndDelete(userID);
+}
+
+const userService = {
     createUser, 
-    loginUser,
-    joinWorkspace
-};
+    loginUser, 
+    deleteUser,
+    joinWorkspace, 
+    getUserTasks
+}
+
+module.exports = userService
