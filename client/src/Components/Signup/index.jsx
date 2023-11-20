@@ -44,31 +44,35 @@ const Signup = () => {
                 title: 'The password and confirm password do not match!'
             });
 
-            return;
         }
 
-        try {
-            const url = 'http://localhost:8080/api/register';
-            const {data: res} = await axios.post(url, data);
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Account created successfully!'
-            });
-
-            navigate("/login");
-            console.log(res.message);
-
-        }
-        catch(error) {
-            if(error.response && error.response.status >= 400 && error.response.status <= 500){
-                // setError(error.response.data.message)
+        else
+            try {
+                console.log('data ' + JSON.stringify(data));
+                delete data.confirmPassword;
+                console.log('fixed data ' + JSON.stringify(data));
+                const url = 'http://localhost:8080/api/register';
+                const res = await axios.post(url, data);
+                console.log('res', res)
                 Toast.fire({
-                    icon: 'error',
-                    title: error.response.data.message
+                    icon: 'success',
+                    title: 'Account created successfully!'
                 });
+                
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000);
+                console.log(res.message);
+
             }
-        }
+            catch(error) {
+                if(error.response && error.response.status >= 400 && error.response.status <= 500){ 
+                    Toast.fire({
+                        icon: 'error',
+                        title: error.response.data.message
+                    });
+                }
+            }
     }
 
 
@@ -90,18 +94,18 @@ const Signup = () => {
                         <h1>Create Account</h1>
 
                         <input type="text" placeholder='First Name'
-                        name='firstName' value={data.firstName}
+                        name='firstName' value={data.firstName} autoComplete='off'
                         onChange={handleChange} required className={styles.input}/>
 
-                        <input type="text" placeholder='Last Name'
+                        <input type="text" placeholder='Last Name'autoComplete='off'
                         name='lastName' value={data.lastName}
                         onChange={handleChange} required className={styles.input}/>
 
-                        <input type="email" placeholder='Email'
+                        <input type="email" placeholder='Email' autoComplete='off'
                         name='email' value={data.email}
                         onChange={handleChange} required className={styles.input}/>
 
-                        <input type="password" placeholder='Password'
+                        <input type="password" placeholder='Password' 
                         name='password' value={data.password}
                         onChange={handleChange} required className={styles.input}/>
 

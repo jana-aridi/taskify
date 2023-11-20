@@ -31,7 +31,7 @@ async function createUser(userData) {
         workspaceID: workspaceID
     }).save();
 
-    if (workspaceId !== null) {
+    if (workspaceID !== null) {
         await Workspace.create({
             _id: workspaceID,
             admin: newUser._id,
@@ -74,9 +74,10 @@ async function loginUser(userData) {
 
 
 async function joinWorkspace(userID, data) {
-    const user = await User.findById(userID); 
-
-    if (!user)
+    
+    const updatedUser = await User.findByIdAndUpdate(userID, data, { new: true }); 
+    
+    if (!updatedUser)
         throw new Error('UserNotFound')
  
     if (!data || data.length === 0)

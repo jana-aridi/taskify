@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Swal from 'sweetalert2';
 import LocalStorageFile from '../LocalStorageFile'; 
-import styles from './style.module.css';
+import styles from './TaskForm.module.css';
  
 const TaskForm = ({ handleTaskCreation, user }) => { 
  
@@ -114,6 +114,7 @@ const TaskForm = ({ handleTaskCreation, user }) => {
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
           required
+          autoComplete="off"
           className={styles.taskNameField}
         />
         

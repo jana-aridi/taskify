@@ -10,7 +10,7 @@ const SideBar = ()=> {
     return (
         <div className={styles.sidebar}> 
           <div className={styles.logo}>
-            <img src="logo.png" width="70%"/>
+            <img src="logo.png" width="60%"/>
             <p className={styles.slogan}>From To-Do to Ta-Da!</p>
           </div>
           <br></br>
