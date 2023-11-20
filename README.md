@@ -48,9 +48,8 @@ Key Features:
 Tech Stack:
 -----------
 
-Frontend: React, and MaterialUI
-Backend: Node.js and JavaScript
-Database: MongoDB to manage task and user data.
-Authentication: JWT-based approach for authentication and session management.
-Design: Figma and Canva to design the UI before starting to implement the work.
+Frontend: React, and MaterialUI     
+Backend: Node.js and JavaScript    
+Database: MongoDB to manage task, workspace and user data      
+Authentication: JWT-based approach for authentication and session management & JOI to ensure password complexity. 
 
