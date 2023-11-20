@@ -35,12 +35,11 @@ const userSchema = new mongoose.Schema({
         default: false,
     },
     
-    // workspaceID: {
-    //     type: String,
-    //     ref: 'Workspace',
-    //     default: null,
-    // }
-
+    workspaceID: {
+        type: String,
+        ref: 'Workspace',
+        default: null,
+    }
     
 })
 

@@ -31,7 +31,8 @@ const taskSchema = new mongoose.Schema({
     },
     
     workspaceID: {
-        type: Schema.Types.ObjectId, ref: 'workspace'
+        type: String, 
+        ref: 'workspace'
     },
 
     subtasks: [SubtaskSchema] 

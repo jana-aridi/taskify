@@ -1,4 +1,5 @@
 const Task = require('../models/task');
+const Workspace = require('../models/workspace');
 const mongoose = require('mongoose');
 
 
@@ -19,6 +20,15 @@ async function createTask(taskData) {
     if (!taskData || Object.keys(taskData).length === 0) {
         throw new Error('TaskDataRequired');
     }
+ 
+    const workspace = await Workspace.findById(taskData.workspaceID);
+    if (!workspace) {
+        throw new Error('WorkspaceNotFound');
+    }
+
+    const assignees = [...new Set(taskData.assignees)]; // to ensure that there are no duplicates
+    taskData.assignees = assignees;
+    taskData.workspaceID = workspace._id;
 
     const task = new Task(taskData);
     const savedTask = await task.save();

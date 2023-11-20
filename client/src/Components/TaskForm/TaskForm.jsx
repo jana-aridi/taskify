@@ -1,86 +1,130 @@
-// TaskForm.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 import Swal from 'sweetalert2';
-import LocalStorageFile from '../LocalStorageFile';
-
-const TaskForm = ({ onTaskCreated }) => {
-
-  const user = LocalStorageFile.getLocalStorageUser();
+import LocalStorageFile from '../LocalStorageFile'; 
+import styles from './style.module.css';
+ 
+const TaskForm = ({ handleTaskCreation, user }) => { 
+ 
   const workspaceID = user.workspaceID;
 
-  const [taskName, setTaskName] = useState('');
-  const [selectedAssignee, setSelectedAssignee] = useState('');
+  const [taskName, setTaskName] = useState(''); 
+  const [selectedAssignees, setSelectedAssignees] = useState([user._id]);
   const [assignees, setAssignees] = useState([]);
+
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
     timer: 3000,
-    timerProgressBar: true
+    timerProgressBar: true,
   });
 
   useEffect(() => {
     const getOtherEmployees = async () => {
       try {
         const url = `http://localhost:8080/api/workspaces/${workspaceID}/${user._id}/otherUsers`;
-        console.log(url);
         const config = {
           headers: {
             'Authorization': `Bearer ${LocalStorageFile.getToken()}`
           }
         };
- 
-        const response = await axios.get(url, config); 
-        console.log(response);
 
-        setTasks(response.data);  
-      } catch (error) { 
-        console.log(error)
-        if(error.response && error.response.status >= 400 && error.response.status <= 500)
-            Toast.fire({
-                icon: 'error',
-                title: error.message
-            })
+        const response = await axios.get(url, config);
+        setAssignees(response.data);
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: error.message
+        });
       }
-    }
- 
-  }, []);
+    };
+
+    getOtherEmployees();
+  }, [workspaceID, user._id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Submit new task
-    // ...
-    onTaskCreated(newTask); // Call the callback function with the new task
+
+    try { 
+      const taskAssignees = (selectedAssignees.length > 0) ? selectedAssignees : [user._id]; 
+
+      const newTask = {
+        name: taskName,
+        assignees: taskAssignees,
+        workspaceID: workspaceID, 
+      };
+
+      const url = `http://localhost:8080/api/tasks/add`;
+      
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${LocalStorageFile.getToken()}`
+        }
+      };
+
+      console.log()
+      const response = await axios.post(url, newTask, config);
+      const responseTask = response.data 
+      console.log('newTask ' + responseTask);
+      handleTaskCreation(responseTask);
+
+      setTaskName('');
+      setSelectedAssignees([user._id]);
+
+    } catch (error) {
+      Toast.fire({
+        icon: 'error',
+        title: `Failed to create task: ${error}`
+      });
+      console.log(error)
+    }
+  };
+ 
+  const handleChangeMultiple = (event) => {
+    setSelectedAssignees(event.target.value);
+  };
+
+  const renderAssigneeNames = (selected) => {
+    // Return placeholder if only the current user is selected
+    if (selected.length === 1 && selected[0] === user._id) {
+      return 'Select Other Assignees';
+    }
+
+    // Map selected IDs to names and join with comma only if there are multiple names
+    const assigneeNames = selected.map(id => {
+      const assignee = assignees.find(a => a._id === id);
+      return assignee ? `${assignee.firstName} ${assignee.lastName}` : '';
+    });
+
+    return assigneeNames.length > 2 ? assigneeNames.join(', ') : assigneeNames.join('');
   };
 
   return (
-    <div className={styles.formContainer} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%' }}>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.taskForm}>
         <TextField
           label="Task Name"
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
           required
-          style={{ flex: 1 }}
+          className={styles.taskNameField}
         />
         
-        <FormControl style={{ flex: 1 }}>
-          <InputLabel id="assignee-select-label">Assignee</InputLabel>
+        <FormControl className={styles.assigneeSelect}>
+          <InputLabel id="assignee-select-label">Assignees</InputLabel>
           <Select
             labelId="assignee-select-label"
-            id="assignee-select"
-            value={selectedAssignee}
-            label="Assignee"
-            onChange={(e) => setSelectedAssignee(e.target.value)}
-            required
+            multiple
+            value={selectedAssignees}
+            onChange={handleChangeMultiple}
+            renderValue={renderAssigneeNames}
           >
             {assignees.map((assignee) => (
               <MenuItem key={assignee._id} value={assignee._id}>
@@ -89,14 +133,13 @@ const TaskForm = ({ onTaskCreated }) => {
             ))}
           </Select>
         </FormControl>
-        
-        <Button type="submit" variant="contained" style={{ backgroundColor: 'black', color: 'white' }}>
-          Submit
+
+        <Button type="submit" variant="contained" className={styles.submitButton}>
+          Add
         </Button>
       </form>
     </div>
   );
-
 };
 
 export default TaskForm;

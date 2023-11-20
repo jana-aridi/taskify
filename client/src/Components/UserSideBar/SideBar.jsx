@@ -2,6 +2,11 @@ import React from 'react';
 import styles from './SideBar.module.css'
 
 const SideBar = ()=> {
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location = '/';
+  }
     return (
         <div className={styles.sidebar}> 
           <div className={styles.logo}>
@@ -11,8 +16,8 @@ const SideBar = ()=> {
           <br></br>
            
           <nav className={styles.nav}> 
-            <a href="#">Task Board</a>
-            <a href="#">Log Out</a> 
+            <a>Task Board</a>
+            <a onClick={handleLogout}>Log Out</a> 
           </nav>
         </div>
     )

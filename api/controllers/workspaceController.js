@@ -30,12 +30,12 @@ const getAllWorkspacesController = async(req, res) => {
 
 }
 
-const getAllOtherWorkspaceEmployeesController = async(req, res) => {
+const getOtherWorkspaceEmployeesController = async(req, res) => {
 
     try {
         const workspaceID = req.params.workspaceID;
         const userID = req.params.userID;
-        const employees = await workspaceService.getAllOtherWorkspaceEmployees(workspaceID, userID);
+        const employees = await workspaceService.getOtherWorkspaceEmployees(workspaceID, userID);
         res.json(employees);
     
     } catch (error) {
@@ -49,7 +49,7 @@ const getAllOtherWorkspaceEmployeesController = async(req, res) => {
 const workspaceController = {
     getAllWorkspaceEmployeesController,
     getAllWorkspacesController,
-    getAllOtherWorkspaceEmployeesController
+    getOtherWorkspaceEmployeesController
 }
 
 module.exports = workspaceController;

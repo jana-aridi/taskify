@@ -1,19 +1,23 @@
 const taskService = require('../services/taskService');
-var jwt = require('jsonwebtoken');
 
 const createTaskController = async(req, res) => {
     try {
-
+        console.log('creating new task')
+        console.log(req.body)
         const newTask = await taskService.createTask(req.body);
-        res.status(201).send({ message: "Task created successfully!" });
+        const newTaskResponse = await newTask.populate('assignees');
+        console.log('new task res ' + newTaskResponse)
+        res.status(201).send(newTaskResponse);
 
     } catch (error) {
         if (error.message === 'TaskDataRequired')
             res.status(422).send({ message: "Task Data is missing!" });
         else if (error.message === 'TaskCreationFailed')
             res.status(500).send({ message: "Couldn't create task!" });
-        else
-            res.status(500).send({ message: "Internal Server Error" });
+        else {
+            res.status(500).send({ message: "Internal Server Error"});
+            console.log(error)
+        }
     }
 
 }

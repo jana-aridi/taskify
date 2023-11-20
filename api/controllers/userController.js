@@ -97,8 +97,8 @@ const getUserTasksController = async(req, res) => {
         console.log(req.params);
         const tasks = await userService.getUserTasks(req.params.userID);
         console.log(tasks);
-        res.status(200).json(tasks);
-        console.log('successful')
+        res.status(200).json(tasks); 
+        
     } catch (error) {
         console.log(error)
         if (error.message === 'UserNotFound') {

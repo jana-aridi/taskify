@@ -15,14 +15,14 @@
   import axios from 'axios';
   import Swal from 'sweetalert2';
   import { Checkbox } from '@mui/material';
+  import confetti from 'canvas-confetti';
 
 
-const TaskList = () => {
 
-  const user = LocalStorageFile.getLocalStorageUser();
+const TaskList = ({ tasks, setTasks }) => {
+ 
   // const hasWorkspace = (user?.workspace === null) ? false : true;
-    
-  const [tasks, setTasks] = useState([]);  
+     
   const [openSubtask, setOpenSubtask] = useState({});  
 
   // Function to toggle subtask collapse
@@ -42,36 +42,6 @@ const TaskList = () => {
     timerProgressBar: true
   });
 
-  useEffect(() => {
-    const getUserTasks = async () => {
-      try {
-        const url = `http://localhost:8080/api/users/getTasks/${user._id}`;
-        console.log(url);
-        const config = {
-          headers: {
-            'Authorization': `Bearer ${LocalStorageFile.getToken()}`
-          }
-        };
- 
-        const response = await axios.get(url, config); 
-        console.log(response);
-
-        setTasks(response.data); // Set fetched tasks to state
-      } catch (error) { 
-        console.log(error)
-        if(error.response && error.response.status >= 400 && error.response.status <= 500)
-            Toast.fire({
-                icon: 'error',
-                title: error.message
-            })
-      }
-    }
-
-    getUserTasks();
-  }, [user._id]); 
-    
-
-  // Task Operations
   const toggleTaskCompletion = async (task) => {
     try {
       
@@ -81,16 +51,20 @@ const TaskList = () => {
           'Authorization': `Bearer ${LocalStorageFile.getToken()}`
         }
       };
-
-      const response = await axios.patch(url, { isCompleted: !task.isCompleted }, config);
-
-      // Update the task in the state
-      setTasks(tasks.map(t => t._id === task._id ? { ...t, isCompleted: !t.isCompleted } : t));
-      Toast.fire({
-        icon: 'success',
-        title: 'Task status updated'
-      });
       
+      const response = await axios.post(url, { isCompleted: !task.isCompleted }, config);
+ 
+      // Update the task in the state
+      setTasks(tasks.map(t => t._id === task._id ? { ...t, isCompleted: !t.isCompleted } : t)); 
+      
+      if (!task.isCompleted) {
+        confetti({
+          particleCount: 100,
+          spread: 170,
+          origin: { y: 0.6 }
+        });
+      }
+
     } catch (error) {
       Toast.fire({
         icon: 'error',
@@ -115,7 +89,7 @@ const TaskList = () => {
       setTasks(tasks.filter(t => t._id !== taskId));
       Toast.fire({
         icon: 'success',
-        title: 'Task deleted'
+        title: 'Task deleted successfully!'
       });
 
     } catch (error) {
@@ -139,7 +113,7 @@ const TaskList = () => {
           </ListSubheader>
         }
       >
-        {tasks.map((task) => (
+        {tasks && tasks.map((task) => (
           <React.Fragment key={task._id}>
             <ListItemButton>
 
@@ -149,8 +123,8 @@ const TaskList = () => {
 
               <ListItemText primary={task.name} />
               <ListItemText secondary={task.assignees.map(a => (a.firstName + " " + a.lastName)).join(', ')} />
-              <IconButton aria-label="delete">
-                <DeleteIcon onClick={() => deleteTask(task._id)} />
+              <IconButton aria-label="delete" onClick={() => deleteTask(task._id)}>
+                <DeleteIcon/>
               </IconButton>
               {task.subtasks.length > 0 ? (
                 openSubtask[task._id] ? <ExpandLess /> : <ExpandMore />
@@ -180,4 +154,4 @@ const TaskList = () => {
   );
   }
 
-  export default TaskList
+  export default TaskList;

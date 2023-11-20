@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 async function getAllWorkspaceEmployees(workspaceID) {
 
-    const workspace = await Workspace.findById(workspaceID).exec();
+    const workspace = await Workspace.findById(workspaceID);
     if (!workspace) {
       throw new Error('WorkspaceNotFound');
     }
@@ -45,7 +45,7 @@ async function getAllWorkspaces() {
     return workspacesWithUserData;
 }
 
-async function getAllOtherWorkspaceEmployees(workspaceID, userID) {
+async function getOtherWorkspaceEmployees(workspaceID, userID) {
     
     const user = await User.findById(userID);
 
@@ -72,7 +72,7 @@ async function getAllOtherWorkspaceEmployees(workspaceID, userID) {
 const workspaceService = {
     getAllWorkspaceEmployees,
     getAllWorkspaces,
-    getAllOtherWorkspaceEmployees
+    getOtherWorkspaceEmployees
 }
 
 module.exports = workspaceService;
