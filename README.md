@@ -21,8 +21,7 @@ Taskify is a task management tool crafted for quick deployment and higher effici
 
 Running Instructions:
 ---------------------
-In the main terminal, enter the api directory through 'cd api' and run 'nodemon index.js' in order to start the backend server.     
-For the frontend enter client directory through 'cd client' in another terminal, and run 'npm start'.       
+In the main terminal, run 'npm start' to run concurrently the api and the client servers.       
 
 
 Key Features:
