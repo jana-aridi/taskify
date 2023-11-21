@@ -135,7 +135,7 @@ const TaskForm = ({ handleTaskCreation, user }) => {
           </Select>
         </FormControl>
 
-        <Button type="submit" variant="contained" className={styles.submitButton}>
+        <Button type="submit" sx={{ bgcolor: 'black', '&:hover': { bgcolor: '#1f95bf' } }} variant="contained" className={styles.submitButton}>
           Add
         </Button>
       </form>

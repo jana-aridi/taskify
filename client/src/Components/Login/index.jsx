@@ -46,12 +46,12 @@ const Login = () => {
 
             if (user.isAdmin)
                 setTimeout(() => {
-                    navigate('/admin-panel');
+                    window.location = '/admin-panel'
                 }, 1500); 
 
             else
                 setTimeout(() => {
-                    navigate('/home');
+                    window.location = '/home';
                 }, 1500); 
         }
         catch(error) {

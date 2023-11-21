@@ -11,10 +11,9 @@ function App() {
   return (
     <Routes> 
 
-            
       <Route path="/login" exact element={<Login/>}/>
       <Route path="/signup" exact element={<Signup/>}/> 
-      
+
       {user && <Route path="/home" exact element={<Home/>} />}
       {user && <Route path="/admin-panel" exact element={<AdminPanel/>} />}
 
@@ -25,6 +24,7 @@ function App() {
 
       {user && user.isAdmin && <Route path="/home" exact element={<AdminPanel/>}/>}
       {user && !user.isAdmin && <Route path="/admin-panel" exact element={<Home/>}/>}
+      
     </Routes>
   );
 }
