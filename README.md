@@ -19,6 +19,12 @@ Taskify is a task management tool crafted for quick deployment and higher effici
   - When a user first signs up, if he/she creates a workspace, they automatically become the 'Company Admin' for that workspace. They can then invite other users to join this workspace. Those invited users become 'Regular Users'. There's only one 'Super Admin', possibly the platform owner or a designated administrator. (On sign up you have an option to create a workspace or join a workspace).
 
 
+Running Instructions:
+---------------------
+In the main terminal, enter the api directory through 'cd api' and run 'nodemon index.js' in order to start the backend server.     
+For the frontend enter client directory through 'cd client' in another terminal, and run 'npm start'.       
+
+
 Key Features:
 --------------
 
