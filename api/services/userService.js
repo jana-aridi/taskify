@@ -74,12 +74,7 @@ async function loginUser(userData) {
 
 
 async function joinWorkspace(userID, data) {
-    
-    const updatedUser = await User.findByIdAndUpdate(userID, data, { new: true }); 
-    
-    if (!updatedUser)
-        throw new Error('UserNotFound')
- 
+     
     if (!data || data.length === 0)
         throw new Error('MissingData')
 
@@ -100,6 +95,11 @@ async function joinWorkspace(userID, data) {
     if (!updatedWorkspace) {
         throw new Error('JoinWorkspaceFailed');
     }
+
+    const updatedUser = await User.findByIdAndUpdate(userID, data, { new: true }); 
+    
+    if (!updatedUser)
+        throw new Error('UserNotFound')
 
     return updatedWorkspace;
 }

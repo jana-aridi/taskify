@@ -7,19 +7,21 @@ import styles from './Home.module.css';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import LocalStorageFile from '../../Components/LocalStorageFile';
+import LocalStorageFile from '../../Utils/LocalStorageFile';
 
 const Home = () => {
-
-  const [tasks, setTasks] = useState([]);
-  const [showJoinWorkspace, setShowJoinWorkspace] = useState(false);
-
   const [user, setUser] = useState(LocalStorageFile.getLocalStorageUser()); 
 
   if (user === null)
     window.location = '/';
 
+  if (user.isAdmin)
+    window.location = '/admin-panel'
+
   const fullName = user ? `${user.firstName} ${user.lastName}` : ' ';
+
+  const [tasks, setTasks] = useState([]);
+  const [showJoinWorkspace, setShowJoinWorkspace] = useState(false);
 
   const Toast = Swal.mixin({
     toast: true,

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import styles from './JoinWorkspace.module.css';
 import Swal from 'sweetalert2';
-import LocalStorageFile from '../LocalStorageFile';
+import LocalStorageFile from '../../Utils/LocalStorageFile';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
-import logo from '../UserSideBar/logo.png';
+import logo from '../../Assets/Images/logo.png';
 
 const JoinWorkspace = ({ user, setUser, toggleJoinWorkspace }) => {  
   const [workspaceID, setWorkspaceID] = useState('');

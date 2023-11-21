@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import styles from './style.module.css'; 
-import LocalStorageFile from '../LocalStorageFile';
+import LocalStorageFile from '../../Utils/LocalStorageFile';
 
 
 const Login = () => {
+
+    const  navigate = useNavigate();
+
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -36,12 +39,20 @@ const Login = () => {
                 icon: 'success',
                 title: res.message,
             });
-            localStorage.setItem("token", res.data.token);
-            LocalStorageFile.setLocalStorageUser(res.data.user);
-            setTimeout(() => {
-                window.location = '/home';
-            }, 1500); 
 
+            const user = res.data.user;
+            localStorage.setItem("token", res.data.token);
+            LocalStorageFile.setLocalStorageUser(user);
+
+            if (user.isAdmin)
+                setTimeout(() => {
+                    navigate('/admin-panel');
+                }, 1500); 
+
+            else
+                setTimeout(() => {
+                    navigate('/home');
+                }, 1500); 
         }
         catch(error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500)
