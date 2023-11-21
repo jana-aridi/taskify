@@ -47,3 +47,19 @@
     align-items: center;
 }
  
+.addButtonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+  
+.joinText {
+cursor: pointer;
+margin-top: 10px; 
+}
+
+.notfound {
+    margin-top: 20%;
+}
+

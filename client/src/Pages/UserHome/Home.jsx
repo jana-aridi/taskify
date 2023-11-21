@@ -74,11 +74,13 @@ const Home = () => {
           <div className={styles.rightContainer_join}>
             <div className={styles.header_join}>
               <h3>Welcome Back {fullName}! 😊</h3>
-              <div className={styles.addButtonDiv}> 
-                <div><button onClick={toggleJoinWorkspace} className={styles.addButton}>+</button></div>
+              <div className={styles.addButtonDiv}>
+                <div className={styles.notfound}> </div>
+                <button onClick={toggleJoinWorkspace} className={styles.addButton}>+</button>
+                <span onClick={toggleJoinWorkspace} className={styles.joinText}>Join Workspace</span>
               </div>
             </div>
-            {showJoinWorkspace && <JoinWorkspace user={user} />} </div>
+            {showJoinWorkspace && <JoinWorkspace user={user} toggleJoinWorkspace={toggleJoinWorkspace} />} </div>
           </>
         ) : (
           <>
