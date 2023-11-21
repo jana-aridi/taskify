@@ -19,6 +19,12 @@ Taskify is a task management tool crafted for quick deployment and higher effici
   - When a user first signs up, if he/she creates a workspace, they automatically become the 'Company Admin' for that workspace. They can then invite other users to join this workspace. Those invited users become 'Regular Users'. There's only one 'Super Admin', possibly the platform owner or a designated administrator. (On sign up you have an option to create a workspace or join a workspace).
 
 
+Running Instructions:
+---------------------
+In the main terminal, enter the api directory through 'cd api' and run 'nodemon index.js' in order to start the backend server.     
+For the frontend enter client directory through 'cd client' in another terminal, and run 'npm start'.       
+
+
 Key Features:
 --------------
 
@@ -30,11 +36,12 @@ Key Features:
   
   2.	Team Collaboration: 
   
-    Regular users can collaborate on tasks and assign tasks to others within the same workspace.
+    Regular users can collaborate on tasks with others within the same workspace, they can also create individual tasks for themselves.
   
   3.	Workspace Management:
   
-    Company Admins can invite users to their workspace. They can also view (but not edit tasks they didn’t assign) all tasks within their workspace. Workspace managers can add tasks to employees (they are not included)
+    Company Admins can invite users to their workspace. They can delete existing workspace users and they can also view (but not edit tasks they didn’t assign) all tasks within their workspace. Workspace   
+    managers can add tasks to employees (they are not included)
   
   4.	User Management:
   
@@ -44,6 +51,7 @@ Key Features:
   5.	Sign Up & Workspace Creation:
   
     Any user can sign up. If they create a workspace during sign-up, they become a Company Admin for that workspace.
+    If on sign up the user didn't choose to be an admin, on login they are supposed to join a workspace through entering the unique ID of the workspace shared by the admin.
 
 Tech Stack:
 -----------
