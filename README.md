@@ -36,11 +36,12 @@ Key Features:
   
   2.	Team Collaboration: 
   
-    Regular users can collaborate on tasks and assign tasks to others within the same workspace.
+    Regular users can collaborate on tasks with others within the same workspace, they can also create individual tasks for themselves.
   
   3.	Workspace Management:
   
-    Company Admins can invite users to their workspace. They can also view (but not edit tasks they didn’t assign) all tasks within their workspace. Workspace managers can add tasks to employees (they are not included)
+    Company Admins can invite users to their workspace. They can delete existing workspace users and they can also view (but not edit tasks they didn’t assign) all tasks within their workspace. Workspace   
+    managers can add tasks to employees (they are not included)
   
   4.	User Management:
   
@@ -50,6 +51,7 @@ Key Features:
   5.	Sign Up & Workspace Creation:
   
     Any user can sign up. If they create a workspace during sign-up, they become a Company Admin for that workspace.
+    If on sign up the user didn't choose to be an admin, on login they are supposed to join a workspace through entering the unique ID of the workspace shared by the admin.
 
 Tech Stack:
 -----------
