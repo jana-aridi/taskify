@@ -1,10 +1,12 @@
 const Workspace = require('../models/workspace'); 
-const {User} = require('../models/user'); 
-const mongoose = require('mongoose');
+const {User} = require('../models/user');  
+const Task = require('../models/task');
+
 
 async function getAllWorkspaceEmployees(workspaceID) {
-
+    
     const workspace = await Workspace.findById(workspaceID);
+    
     if (!workspace) {
       throw new Error('WorkspaceNotFound');
     }
@@ -63,16 +65,37 @@ async function getOtherWorkspaceEmployees(workspaceID, userID) {
           $ne: userID 
         }
     }).select('_id firstName lastName email');
-      
-    console.log(users);
-    
+           
     return users;
+}
+
+async function removeUserFromWorkspace(workspaceID, userID) {
+    const workspace = await Workspace.findOne({_id: workspaceID});
+ 
+    const user = await User.findById(userID);
+
+    if (!workspace)
+        throw new Error('InvalidWorkspace');
+
+    if (!user)
+        throw error('InvalidUser');
+
+    await Workspace.updateOne({ _id: workspaceID }, { $pull:  { employees: userID } });
+
+    await User.findByIdAndUpdate(userID, {workspaceID: null});
+    
+    await Task.updateMany(
+        { assignees: userID },
+        { $pull: { assignees: userID } }
+      );
+
 }
 
 const workspaceService = {
     getAllWorkspaceEmployees,
     getAllWorkspaces,
-    getOtherWorkspaceEmployees
+    getOtherWorkspaceEmployees,
+    removeUserFromWorkspace
 }
 
 module.exports = workspaceService;

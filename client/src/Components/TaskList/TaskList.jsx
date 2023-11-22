@@ -1,28 +1,25 @@
-  import * as React from 'react';
-  import { useState, useEffect } from 'react';
-  import ListSubheader from '@mui/material/ListSubheader';
-  import List from '@mui/material/List';
-  import ListItemButton from '@mui/material/ListItemButton';
-  import ListItemIcon from '@mui/material/ListItemIcon';
-  import ListItemText from '@mui/material/ListItemText';
-  import Collapse from '@mui/material/Collapse'; 
-  import IconButton from '@mui/material/IconButton'; 
-  import DeleteIcon from '@mui/icons-material/Delete';
-  import ExpandLess from '@mui/icons-material/ExpandLess';
-  import ExpandMore from '@mui/icons-material/ExpandMore'; 
-  import LocalStorageFile from '../../Utils/LocalStorageFile';
-  import styles from './TaskList.module.css'
-  import axios from 'axios';
-  import Swal from 'sweetalert2';
-  import { Checkbox } from '@mui/material';
-  import confetti from 'canvas-confetti';
-
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse'; 
+import IconButton from '@mui/material/IconButton'; 
+import DeleteIcon from '@mui/icons-material/Delete';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore'; 
+import LocalStorageFile from '../../Utils/LocalStorageFile';
+import styles from './TaskList.module.css'
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { Checkbox } from '@mui/material';
+import confetti from 'canvas-confetti'; 
 
 
 const TaskList = ({ tasks, setTasks }) => {
- 
-  // const hasWorkspace = (user?.workspace === null) ? false : true;
-     
+      
   const [openSubtask, setOpenSubtask] = useState({});  
 
   // Function to toggle subtask collapse
@@ -53,7 +50,7 @@ const TaskList = ({ tasks, setTasks }) => {
       };
       
       const response = await axios.post(url, { isCompleted: !task.isCompleted }, config);
- 
+     
       // Update the task in the state
       setTasks(tasks.map(t => t._id === task._id ? { ...t, isCompleted: !t.isCompleted } : t)); 
       
@@ -63,6 +60,7 @@ const TaskList = ({ tasks, setTasks }) => {
           spread: 170,
           origin: { y: 0.6 }
         });
+ 
       }
 
     } catch (error) {

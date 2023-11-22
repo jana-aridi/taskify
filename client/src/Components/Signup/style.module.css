@@ -67,17 +67,6 @@
 	font-size: 14px;
 }
 
-.error_msg {
-	width: 370px;
-	padding: 8px;
-	margin: 5px 0;
-	font-size: 14px;
-	background-color: #f34646;
-	color: white;
-	border-radius: 5px;
-	text-align: center;
-}
-
 .white_btn,
 .green_btn {
 	border: none;
@@ -94,7 +83,7 @@
 .green_btn {
 	background-color: #36c5df;
 	color: white;
-	margin: 10px;
+	margin: 7px;
 }
 
 .logo {

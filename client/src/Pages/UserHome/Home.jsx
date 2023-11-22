@@ -82,7 +82,14 @@ const Home = () => {
                 <span onClick={toggleJoinWorkspace} className={styles.joinText}>Join Workspace</span>
               </div>
             </div>
-            {showJoinWorkspace && <JoinWorkspace user={user} toggleJoinWorkspace={toggleJoinWorkspace} />} </div>
+            {
+            showJoinWorkspace && <div className={styles.modalBackdrop}>
+                                    <div className={styles.joinWorkspaceForm}>
+                                      <JoinWorkspace user={user} toggleJoinWorkspace={toggleJoinWorkspace} />
+                                    </div>
+                                  </div>
+            } 
+          </div>
           </>
         ) : (
           <>

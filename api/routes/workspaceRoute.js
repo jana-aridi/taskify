@@ -9,5 +9,7 @@ router.get('/:workspaceID/users', authenticateToken, workspaceController.getAllW
 router.get('/:workspaceID/:userID/otherUsers', authenticateToken, workspaceController.getOtherWorkspaceEmployeesController);
 
 router.get('', authenticateToken, workspaceController.getAllWorkspacesController);
+
+router.delete('/:workspaceID/:userID', authenticateToken, workspaceController.removeUserFromWorkspaceController);
  
 module.exports = router;
