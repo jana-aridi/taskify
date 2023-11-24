@@ -28,7 +28,7 @@ Key Features:
 
   1.	Task Management:
   
-    Regular users can add, update, delete, and complete tasks. Upon completion, sound effects play, and confetti animations appear.
+    Regular users can add, delete, and complete tasks. Upon completion, confetti animations appear.
     Tasks are displayed with other assignees. 
   
   2.	Team Collaboration: 
@@ -42,7 +42,7 @@ Key Features:
   4.	User Management:
   
     Company Admins can manage users within their workspace.
-    Super Admins can manage all users across the platform, including adding, editing, and deleting users. (to be implemented)
+    Super Admins can manage all users across the platform, including adding, editing, and deleting users. (To be implemented for final)
   
   5.	Sign Up & Workspace Creation:
   
