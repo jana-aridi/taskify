@@ -16,7 +16,7 @@ const Home = () => {
     window.location = '/';
 
   if (user.isAdmin)
-    window.location = '/admin-panel'
+    window.location = '/admin-panel';
 
   const fullName = user ? `${user.firstName} ${user.lastName}` : ' ';
 

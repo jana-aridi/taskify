@@ -12,6 +12,10 @@ const AdminPanel = () => {
     window.location = "/";
   }
 
+  if (!user.isAdmin) {
+    window.location = '/home';
+  }
+  
   const fullName = `${user.firstName} ${user.lastName}`;
  
   const workspaceID = user?.workspaceID;
